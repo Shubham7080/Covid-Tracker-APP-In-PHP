@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    <title>Document</title>
+</head>
+<body>
+<h1 class="text-light bg-dark text-center my-5">Covid Tracker APP</h1>
+    <table class="table table-dark table-striped table-primary my-5">
+        
+            <tr>
+              <td scope="col" class="text-center"><h2>Covid Tracker </h2></td>
+              <td><h2>Global Data</h2></td>
+            <tr>
+                <tbody id="global">
+
+
+
+                </tbody>
+                
+      </table>
+      <br><br>
+      <table class="table table-dark table-striped table-primary my-2">
+        
+        <tr>
+          <td scope="col" class="text-center"><h2>Covid Tracker </h2></td>
+          <td><h2>Country-Wise Data</h2></td>
+        <tr>
+            <tbody id="country-wise">
+                    <th>Sno</th>
+                    <th>Country</th>
+                    <th>NewConfirmed</th>
+                    <th>NewDeaths</th>
+                    <th>NewRecovered</th>
+                    <th>TotalConfirmed</th>
+                    <th>TotalDeaths</th>
+                    <th>TotalRecovered</th>
+
+
+            </tbody>
+           
+            
+  </table>
+
+    <script src="jq/jquery.js"></script>
+
+
+    <script>
+        $.ajax({
+            url:"https://api.covid19api.com/summary",
+            type:"GET",
+            dataType:"json",
+            success:function(data){
+                console.log(data);
+                console.log(data.Countries);
+                $.each(data.Global,function(key,value){
+                    console.log(key + ":" + value);
+                    $("#global").append("<tr><td>"+key+"</td><td>"
+                    +value+"</td></tr>"
+                    )
+                })
+                var Sno = 1
+                $.each(data.Countries,function(key,value){
+                    $("#country-wise").append("<tr>"+
+                        "<td>"+Sno+"</td>"+
+                        "<td>"+value.Country+"</td>"+
+                        "<td>"+value.NewConfirmed+"</td>"+
+                        "<td>"+value.NewDeaths+"</td>"+
+                        "<td>"+value.NewRecovered+"</td>"+
+                        "<td>"+value.TotalConfirmed+"</td>"+
+                        "<td>"+value.TotalDeaths+"</td>"+
+                        "<td>"+value.TotalRecovered+"</td>"
+                        +"</tr>");
+                      Sno++  
+                })
+
+            }
+        })
+
+
+
+    </script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
+</body>
+</html>
